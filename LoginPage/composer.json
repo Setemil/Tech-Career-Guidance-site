@@ -1,0 +1,6 @@
+{
+    "name": "setemi/login-page",
+    "require": {
+        "phpmailer/phpmailer": "^6.9"
+    }
+}

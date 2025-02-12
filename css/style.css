@@ -1,0 +1,111 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
+body {
+  font-family: "Outfit", serif;
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to left, #b1adff, #d7d5fc);
+}
+
+.outer-div {
+  position: relative;
+  background: #ffffff;
+  border-radius: 20px;
+  width: 1000px;
+  height: 600px;
+}
+
+.inner-div {
+  width: 400px;
+  height: 600px;
+  background-color: #6a679e;
+  position: absolute;
+  left: 0; /* Start from left */
+  text-align: center;
+  justify-content: center;
+  transition: left 0.7s ease; /* Smooth transition */
+  border-radius: 20px;
+}
+
+.loginPane {
+  margin-left: 400px;
+  width: 600px;
+  height: 550px;
+  position: relative;
+  display: flex;
+  place-items: center;
+  align-items: center;
+}
+input {
+  background-color: #d7d5fc;
+  border: none;
+  border-radius: 5px;
+  width: 300px;
+  height: 35px;
+  margin-bottom: 10px;
+}
+a {
+  text-decoration: none;
+  color: #6a679e;
+}
+.submit-btn {
+  border: 2px solid #d7d5fc;
+  border-radius: 25px;
+  align-self: center;
+  width: 200px;
+  height: 40px;
+  font-weight: bolder;
+  font-size: 17px;
+  text-align: center;
+  color: #6a679e;
+  background-color: white;
+}
+.submit-btn:hover {
+  background-color: #a7a3f0;
+  color: white;
+  transition: 0.5s ease;
+}
+p {
+  font-size: 15px;
+}
+h1 {
+  color: #6a679e;
+  font-size: 50px;
+}
+input::placeholder {
+  color: #ffffff;
+  padding-left: 10px;
+}
+svg {
+  height: 30px;
+  width: 35px;
+}
+
+.hidden {
+  display: none;
+  visibility: hidden; /* Prevents interaction while hidden */
+  transition: display 1s, visibility 1s;
+}
+
+.fade-in {
+  display: block;
+  visibility: visible;
+  transition: display 1s, visibility 1s;
+}
+.logo h1 {
+  color: White;
+}
+
+.inner-div p {
+  color: #e5e3ff;
+}
+.error-message {
+  color: white;
+  background-color: red;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  margin-top: 10px;
+}
