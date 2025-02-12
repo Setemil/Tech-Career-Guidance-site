@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tech Career Guidance and Consultancy Dashboard">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="untitled.css">
+    <script defer src="dashboard_script.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2 id="sidebar-title">Tech Navigator</h2>
+                <button class="toggle-sidebar" id="toggle-sidebar">&#9776;</button>
+            </div>
+            <div class="sidebar-menu">
+                <ul>
+                    <li><a href="#" title="Home"><span class="icon">&#8962;</span><span class="menu-text">Home</span></a></li>
+                    <li><a href="#" title="Career Resources"><span class="icon">&#128218;</span><span class="menu-text">Career Resources</span></a></li>
+                    <li><a href="#" title="Consultations"><span class="icon">&#128172;</span><span class="menu-text">Consultation Sessions</span></a></li>
+                    <li><a href="#" title="Events"><span class="icon">&#127881;</span><span class="menu-text">Upcoming Events</span></a></li>
+                    <li><a href="#" title="Profile Settings"><span class="icon">&#9881;</span><span class="menu-text">Profile Settings</span></a></li>
+                    <li><a href="#" title="Support"><span class="icon">&#10067;</span><span class="menu-text">Help & Support</span></a></li>
+                </ul>
+            </div>
+            <div class="logout-container">
+                <a href="#" class="logout">Logout</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="main-header">
+                <h1>Welcome, [User's Name]</h1>
+            </div>
+
+            <!-- Dashboard Cards -->
+            <div class="cards">
+                <div class="card">
+                    <h3>Consultation Sessions</h3>
+                    <p>Book and manage your consultation appointments with professionals in tech.</p>
+                    <a href="#" class="cta-button">Manage Sessions</a>
+                </div>
+                <div class="card">
+                    <h3>Career Resources</h3>
+                    <p>Explore comprehensive guides and curated resources to grow in tech.</p>
+                    <a href="#" class="cta-button">View Resources</a>
+                </div>
+                <div class="card">
+                    <h3>Upcoming Events</h3>
+                    <p>Stay informed about networking events, webinars, and more.</p>
+                    <a href="#" class="cta-button">View Events</a>
+                </div>
+                <div class="card">
+                    <h3>Profile Settings</h3>
+                    <p>Customize your profile and update personal information.</p>
+                    <a href="#" class="cta-button">Edit Profile</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
