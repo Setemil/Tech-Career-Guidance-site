@@ -4,7 +4,7 @@ require_once '../LoginPage/conn.php'; // Include the database connection
 
 // Check if the user is logged in
 if (!isset($_SESSION['name'])) {
-    header("Location: index.php");
+    header("Location: ../LoginPage/index.php");
     exit();
 }
 
@@ -22,7 +22,7 @@ if ($result->num_rows === 1) {
 } else {
     // If no matching user is found, force logout
     session_destroy();
-    header("Location: index.php?error=" . urlencode("Session expired. Please log in again."));
+    header("Location: ../LoginPage/index.php?error=" . urlencode("Session expired. Please log in again."));
     exit();
 }
 
