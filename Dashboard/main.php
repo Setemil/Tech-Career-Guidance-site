@@ -24,7 +24,8 @@ if ($result->num_rows === 1) {
 
 $stmt->close();
 
-$courseQuery = "SELECT course_name, course_image, link FROM courses ORDER BY course_name ASC"; 
+// Fetch courses with their IDs
+$courseQuery = "SELECT id, course_name, course_image FROM courses ORDER BY course_name ASC"; 
 $courseResult = $conn->query($courseQuery);
 
 $conn->close();
@@ -38,11 +39,14 @@ $conn->close();
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../css/userstyle.css">
     <style>
-        .header {
-            background-color: #817ec7;
-        }
         .cta-button {
             background-color: #a7a3f0;
+            text-decoration: none;
+            display: inline-block;
+            padding: 10px 15px;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
         }
         .cta-button:hover {
             background-color: #6a679e;
@@ -59,7 +63,7 @@ $conn->close();
                     <img src="../<?= htmlspecialchars($course['course_image']) ?>" alt="<?= htmlspecialchars($course['course_name']) ?>">
                     <div class="card-content">
                         <h3><?= htmlspecialchars($course['course_name']) ?></h3>
-                        <a href="<?= htmlspecialchars($course['link']) ?>" class="cta-button">Explore Path</a>
+                        <a href="roadmap.php?course_id=<?= $course['id'] ?>" class="cta-button">Explore Path</a>
                     </div>
                 </div>
             <?php endwhile; ?>

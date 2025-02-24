@@ -36,7 +36,7 @@ $result = $conn->query($sql);
             padding: 8px 12px;
             cursor: pointer;
             text-align: center;
-            /* width: 80%; */
+            width: 80%;
             border-radius: 4px;
             margin-top: 10px;
             text-decoration: none;
@@ -44,6 +44,20 @@ $result = $conn->query($sql);
 
         .delete-btn:hover {
             background-color: #cc0000;
+        }
+        .cta-button{
+            display: block;
+            width: 80%;
+            padding: 8px 12px;
+            text-align: center;
+            background-color: #3498db;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .cta-button:hover{
+            background-color:rgb(40, 118, 171);
         }
     </style>
 </head>
@@ -73,7 +87,7 @@ $result = $conn->query($sql);
                              alt="<?php echo htmlspecialchars($row['course_name']); ?>" 
                              onerror="this.src='/MainBySetemi/uploads/default.jpg'">
                         <h3><?php echo htmlspecialchars($row['course_name']); ?></h3>
-                        
+                        <a href="manage_roadmap.php?course_id=<?= $row['id'] ?>" class="cta-button">Edit Roadmap</a>
                         <!-- Delete Course Button -->
                             <a href="delete_course.php?course_id=<?php echo $row['id']; ?>"
                                 class="delete-btn"

@@ -10,6 +10,7 @@ body {
     height: 100vh;
     overflow: hidden;
 }
+
 a{
     text-decoration: none;
 }
@@ -18,7 +19,6 @@ a{
     justify-content: space-between;
     align-items: center;
     padding: 15px 20px;
-    /* background-color: #3498db; */
     color: white;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     flex-wrap: wrap; 
@@ -205,14 +205,6 @@ a{
     .brand-logo {
         font-size: 1rem;
     }
-}
-
-.card {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s;
-    overflow: hidden;
 }
 
 .card:hover {

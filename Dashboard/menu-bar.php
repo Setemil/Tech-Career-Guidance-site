@@ -1,4 +1,21 @@
-<div class="header">
+    <style>
+        .card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.card a {
+    width: 80%;
+    text-align: center;
+}
+    </style>
+<div class="header" style="background-color: #817ec7;">
         <div class="header-left">
             <a href="main.php" style="text-decoration: none">
             <div class="brand-logo">
