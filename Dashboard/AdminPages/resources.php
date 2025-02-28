@@ -1,4 +1,12 @@
 <?php
+
+session_start(); 
+require_once '../../LoginPage/conn.php'; 
+
+if (!isset($_SESSION['name'])) {
+    header("Location: ../../LoginPage/index.php"); // Redirect to login page
+    exit();
+}
 include '../../LoginPage/conn.php'; 
 
 $sql = "SELECT id, course_name, course_image FROM courses ORDER BY course_name ASC";
@@ -27,6 +35,8 @@ $result = $conn->query($sql);
             display: flex;
             flex-direction: column;
             align-items: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+
         }
 
         .delete-btn {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 24, 2025 at 02:48 AM
+-- Generation Time: Feb 28, 2025 at 04:20 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,29 @@ SET time_zone = "+00:00";
 --
 -- Database: `careerguidancedb`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `appointments`
+--
+
+CREATE TABLE `appointments` (
+  `id` int(11) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  `instructor_id` int(11) NOT NULL,
+  `course_id` int(11) NOT NULL,
+  `appointment_time` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `appointments`
+--
+
+INSERT INTO `appointments` (`id`, `student_id`, `instructor_id`, `course_id`, `appointment_time`) VALUES
+(1, 6, 1, 15, '2025-03-01 01:00:00'),
+(2, 5, 7, 28, '2025-03-02 05:20:00'),
+(3, 5, 3, 15, '2025-02-28 01:23:00');
 
 -- --------------------------------------------------------
 
@@ -122,6 +145,28 @@ INSERT INTO `instructor_courses` (`instructor_id`, `course_id`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `news_updates`
+--
+
+CREATE TABLE `news_updates` (
+  `id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `content` text NOT NULL,
+  `image_path` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `news_updates`
+--
+
+INSERT INTO `news_updates` (`id`, `title`, `content`, `image_path`, `created_at`) VALUES
+(5, 'HTML Abbreviation has been CHANGED', 'HTML which is commonly known as the \"building block of the internet\" has now gotten its acronym changed from the usual \"HyperText Markup Language\" that we all grew upp to know and love into sommething totally different', 'uploads/news/1740712407_116571.jpg', '2025-02-28 03:13:27'),
+(6, 'CSS is now OUTTDATED???!!!', 'HTML which is commonly known as the \"building block of the internet\" has now gotten its acronym changed from the usual \"HyperText Markup Language\" that we all grew upp to know and love into sommething totally different', 'uploads/news/1740712434_13652.jpg', '2025-02-28 03:13:54');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `student`
 --
 
@@ -142,7 +187,7 @@ CREATE TABLE `student` (
 --
 
 INSERT INTO `student` (`student_id`, `name`, `age`, `gender`, `university_email`, `email`, `phone`, `password`, `role`) VALUES
-(4, 'SetemiL', NULL, NULL, 'setemiloye@gmail.com', NULL, NULL, '$2y$10$cIEjjcMwMwNp7a6T2TXb/eZnXkAEZIi6nrleDOmpc5XLcCnYpZVtW', 'admin'),
+(4, 'Setemi', NULL, NULL, 'setemiloye@gmail.com', NULL, NULL, '$2y$10$bDz2BIp3.W6vS7VmRak/8ubJL6PAooHnIEXpjWuszmbQuyrbCV0/y', 'admin'),
 (5, 'Segzy', NULL, NULL, 'opawandesegun@gmail.com', NULL, NULL, '$2y$10$LUxUu.Pey6qmYGj9sxBP6eeQ1K1HnrbIPJ9mE9s6QCxdXiMNWasLS', 'student'),
 (6, 'odiche', NULL, NULL, 'odichenye45@gmail.com', NULL, NULL, '$2y$10$FP6Y4t2PmAYAhHLzIFB5v.0sxJ47BHA1Cynm7YVy9dxml.tfOg6EK', 'student'),
 (7, 'YounJ', NULL, NULL, 'yjesse330@gmail.com', NULL, NULL, '$2y$10$/JP1wMxxMDG.4U/To9WapOQb9s40Mitr8X3zuijY2deMoF0LsjDo6', 'student');
@@ -150,6 +195,15 @@ INSERT INTO `student` (`student_id`, `name`, `age`, `gender`, `university_email`
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `appointments`
+--
+ALTER TABLE `appointments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `student_id` (`student_id`),
+  ADD KEY `instructor_id` (`instructor_id`),
+  ADD KEY `course_id` (`course_id`);
 
 --
 -- Indexes for table `courses`
@@ -179,6 +233,12 @@ ALTER TABLE `instructor_courses`
   ADD KEY `course_id` (`course_id`);
 
 --
+-- Indexes for table `news_updates`
+--
+ALTER TABLE `news_updates`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `student`
 --
 ALTER TABLE `student`
@@ -189,6 +249,12 @@ ALTER TABLE `student`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `appointments`
+--
+ALTER TABLE `appointments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `courses`
@@ -209,6 +275,12 @@ ALTER TABLE `instructors`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
+-- AUTO_INCREMENT for table `news_updates`
+--
+ALTER TABLE `news_updates`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
@@ -217,6 +289,14 @@ ALTER TABLE `student`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `appointments`
+--
+ALTER TABLE `appointments`
+  ADD CONSTRAINT `appointments_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`student_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `appointments_ibfk_2` FOREIGN KEY (`instructor_id`) REFERENCES `instructors` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `appointments_ibfk_3` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `course_roadmap`

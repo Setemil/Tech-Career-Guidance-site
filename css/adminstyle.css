@@ -4,7 +4,7 @@ body {
   font-family: "Outfit", serif;
     margin: 0;
     display: flex;
-    background: #f4f4f9;
+    background: #f4f4f9; 
 }
 .sidebar h2{
   margin-bottom: 30px;

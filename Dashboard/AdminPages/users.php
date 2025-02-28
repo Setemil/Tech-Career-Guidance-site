@@ -1,4 +1,12 @@
 <?php
+
+session_start(); 
+require_once '../../LoginPage/conn.php'; 
+
+if (!isset($_SESSION['name'])) {
+    header("Location: ../../LoginPage/index.php"); // Redirect to login page
+    exit();
+}
 include '../../LoginPage/conn.php'; 
 
 $sql = "SELECT name, university_email, gender, phone FROM student WHERE role = 'student'";
@@ -11,7 +19,7 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Management</title>
+    <title>Registered Students</title>
     <link rel="stylesheet" href="../../css/adminstyle.css">
 </head>
 <body>

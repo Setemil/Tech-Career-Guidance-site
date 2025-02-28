@@ -1,4 +1,12 @@
 <?php
+session_start(); 
+require_once '../../LoginPage/conn.php'; 
+
+if (!isset($_SESSION['name'])) {
+    header("Location: ../../LoginPage/index.php"); // Redirect to login page
+    exit();
+}
+
 // Include database connection
 include '../../LoginPage/conn.php';
 

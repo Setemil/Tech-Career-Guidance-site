@@ -1,4 +1,12 @@
 <?php
+
+session_start(); 
+require_once '../../LoginPage/conn.php'; 
+
+if (!isset($_SESSION['name'])) {
+    header("Location: ../../LoginPage/index.php"); // Redirect to login page
+    exit();
+}
 include '../../LoginPage/conn.php';
 
 // Fetch instructors
@@ -28,6 +36,7 @@ $result = $conn->query($sql);
             border-radius: 8px;
             padding: 15px;
             text-align: center;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
             background-color: #fff;
             border: 1px solid #ddd;
         }

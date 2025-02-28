@@ -1,4 +1,12 @@
 <?php
+
+session_start(); 
+require_once '../../LoginPage/conn.php'; 
+
+if (!isset($_SESSION['name'])) {
+    header("Location: ../../LoginPage/index.php"); // Redirect to login page
+    exit();
+}
 include '../../LoginPage/conn.php'; 
 
 // Fetch all courses
@@ -139,8 +147,8 @@ $roadmapResult = $roadmapStmt->get_result();
     <div class="main-content">
         <header>
         <h1>Manage Course Roadmaps</h1>
-
         </header>
+        
         <!-- Course Selection Dropdown -->
         <div class="course-dropdown">
             <form method="GET">

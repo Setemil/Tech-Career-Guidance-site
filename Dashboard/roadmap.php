@@ -66,7 +66,7 @@ $conn->close();
     <style>
         header{
             background: white;
-            padding: 15px;
+            padding: 10px;
             box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
             text-align: center;

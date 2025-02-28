@@ -14,6 +14,14 @@
     width: 80%;
     text-align: center;
 }
+header {
+    background: white;
+    padding: 15px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
     </style>
 <div class="header" style="background-color: #817ec7;">
         <div class="header-left">
@@ -46,7 +54,7 @@
                         <i class="bi bi-book"></i>
                     </div>
                 </a>
-                <a href="session.php">
+                <a href="appointments.php">
                     <div class="icon-wrapper" data-tooltip="Consultation Sessions">
                         <i class="bi bi-calendar"></i>
                     </div>

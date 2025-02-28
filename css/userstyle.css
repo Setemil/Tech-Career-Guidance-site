@@ -138,22 +138,7 @@ a{
     overflow-y: auto;
 }
 
-/* .btn {
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  background-color: #6200ea;
-  color: white;
-  text-decoration: none;
-  border-radius: 4px;
-  transition: background-color 0.3s ease;
-  text-align: center;
-  border: none;
-  cursor: pointer;
-}
 
-.btn:hover {
-   background-color: #3700b3;
-} */
 
 .cards {
     display: grid;

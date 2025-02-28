@@ -22,10 +22,11 @@
         <h2>Admin Panel</h2>
         <ul>
             <li><a href="admin.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'admin.php' ? 'active' : '' ?>">Dashboard</a></li>
-            <li><a href="users.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'users.php' ? 'active' : '' ?>">User Management</a></li>
+            <li><a href="users.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'users.php' ? 'active' : '' ?>">Registered Students</a></li>
             <li><a href="resources.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'resources.php' ? 'active' : '' ?>">Career Resources</a></li>
             <li><a href="instructors.php"  class="<?php echo basename($_SERVER['PHP_SELF']) == 'instructors.php' ? 'active' : '' ?>">Instructor Management</a></li>
             <li><a href="appointments.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'appointments.php' ? 'active' : '' ?>">Appointments</a></li>
+            <li><a href="updates.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'updates.php' ? 'active' : '' ?>">Tech Updates/News</a></li>
             <li><a href="settings.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'settings.php' ? 'active' : '' ?>">Settings</a></li>
             <li>
             <div style="width: 8%">
