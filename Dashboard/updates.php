@@ -40,11 +40,6 @@ if (!$result) {
     <title>Tech Updates</title>
     <link rel="stylesheet" href="../css/userstyle.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background: #f4f4f4;
-        }
         .news-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));

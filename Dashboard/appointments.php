@@ -75,9 +75,11 @@ $conn->close();
 </head>
 <body>
     <?php include 'menu-bar.php'; ?>
+    <div class="main-content">
     <div class="appointments-container">
+        <header>
         <h2>Appointments</h2>
-        
+        </header>        
         <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
             <p id="success-message" style="color: green; text-align: center;">Appointment booked successfully.</p>
             <script>
@@ -98,10 +100,11 @@ $conn->close();
                 </div>
             <?php endwhile; ?>
         <?php else: ?>
-            <p>No appointments have been set</p>
+            <p>You haven't booked any Apppointments yet!</p>
         <?php endif; ?>
 
         <a href="set_appointment.php" class="set-appointment-btn">Set up a new appointment</a>
+    </div>
     </div>
 </body>
 </html>

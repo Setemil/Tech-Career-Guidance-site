@@ -85,14 +85,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['book_appointment'])) 
         }
 
         .container {
-            width: 400px;
+            width: 600px;
             background: white;
             padding: 20px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
         }
 
-        h2 {
+        h1 {
             text-align: center;
             color: #4a47a3;
         }
@@ -103,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['book_appointment'])) 
             margin-top: 10px;
         }
 
-        select, input {
+        select, .input {
             width: 100%;
             padding: 8px;
             margin-top: 5px;
@@ -111,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['book_appointment'])) 
             border-radius: 5px;
         }
 
-        button {
+        .button {
             width: 100%;
             background-color: #817ec7;
             color: white;
@@ -123,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['book_appointment'])) 
             font-size: 16px;
         }
 
-        button:hover {
+        .button:hover {
             background-color: #6a679e;
         }
 
@@ -147,8 +147,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['book_appointment'])) 
     
     <div class="main-content">
     <div class="container">
-        <h2>Book an Appointment</h2>
-        
+        <h1>Book an Appointment</h1>
+        <a href="appointments.php" class="button">Go back</a>
         <?php if (isset($_SESSION['success_message'])): ?>
             <p class="success"><?php echo $_SESSION['success_message']; unset($_SESSION['success_message']); ?></p>
         <?php elseif (isset($_SESSION['error_message'])): ?>
@@ -170,9 +170,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['book_appointment'])) 
             </select>
 
             <label>Appointment Time:</label>
-            <input type="datetime-local" name="appointment_time" required>
+            <input class="input" type="datetime-local" name="appointment_time" required>
 
-            <button type="submit" name="book_appointment">Book Appointment</button>
+            <button class="button" type="submit" name="book_appointment">Book Appointment</button>
         </form>
     </div>
     </div>

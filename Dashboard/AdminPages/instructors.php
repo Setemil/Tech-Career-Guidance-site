@@ -40,18 +40,27 @@ $result = $conn->query($sql);
             background-color: #fff;
             border: 1px solid #ddd;
         }
-        .delete-btn {
-            background-color: #ff4d4d;
+        .delete-btn, .edit-btn {
+            display: block;
+            padding: 8px 12px;
             color: white;
             border: none;
-            padding: 8px 12px;
             cursor: pointer;
             text-decoration: none;
-            display: block;
             margin-top: 10px;
+            border-radius: 5px;
+        }
+        .delete-btn {
+            background-color: #ff4d4d;
         }
         .delete-btn:hover {
             background-color: #cc0000;
+        }
+        .edit-btn {
+            background-color: #817ec7;
+        }
+        .edit-btn:hover {
+            background-color:rgb(114, 112, 167);
         }
     </style>
 </head>
@@ -73,6 +82,9 @@ $result = $conn->query($sql);
                         <p>Phone: <?php echo htmlspecialchars($row['phone']); ?></p>
                         <p>Courses: <?php echo htmlspecialchars($row['courses'] ?: 'None'); ?></p>
                         
+                        <a href="edit_instructor.php?instructor_id=<?php echo $row['id']; ?>" class="edit-btn">
+                            Edit Instructor
+                        </a>
                         <a href="delete_instructor.php?instructor_id=<?php echo $row['id']; ?>"
                             class="delete-btn"
                             onclick="return confirm('Are you sure you want to delete this instructor?');">

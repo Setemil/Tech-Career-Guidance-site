@@ -175,7 +175,7 @@ $conn->close();
 
     <div class="main-content">
         <header>
-        <a href="main.php" class="cta-button">Go back</a>
+        <a href="paths.php" class="cta-button">Go back</a>
         <h2><?php echo htmlspecialchars($course['course_name']); ?> Roadmap</h2>
         </header>
     <div class="timeline">
