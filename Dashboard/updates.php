@@ -117,6 +117,12 @@ if (!$result) {
             color: gray;
             margin-top: 20px;
         }
+        @media screen and (max-width: 768px) {
+            .news-container {
+                width: 90%;
+            }
+            
+        }
     </style>
 </head>
 <body>

@@ -45,7 +45,7 @@
                 </div>
             </div>
             <div class="hero-image">
-                <img src="#" alt="Career guidance illustration">
+                <img src="hero.jpeg" alt="Career guidance illustration">
             </div>
         </div>
     </section>
@@ -134,32 +134,26 @@
                 <div class="roadmap-card">
                     <h3>Web Development</h3>
                     <p>Master front-end and back-end technologies to become a full-stack web developer capable of building modern, responsive websites and web applications.</p>
-                    <a href="#" class="btn btn-primary">View Roadmap</a>
                 </div>
                 <div class="roadmap-card">
                     <h3>Data Science</h3>
                     <p>Learn statistics, machine learning, and data visualization to extract insights from complex datasets and drive business decisions.</p>
-                    <a href="#" class="btn btn-primary">View Roadmap</a>
                 </div>
                 <div class="roadmap-card">
                     <h3>Mobile Development</h3>
                     <p>Build native and cross-platform mobile applications for iOS and Android using modern frameworks and best practices.</p>
-                    <a href="#" class="btn btn-primary">View Roadmap</a>
                 </div>
                 <div class="roadmap-card">
                     <h3>Cloud Computing</h3>
                     <p>Develop expertise in cloud platforms, infrastructure as code, and DevOps practices for scalable and reliable applications.</p>
-                    <a href="#" class="btn btn-primary">View Roadmap</a>
                 </div>
                 <div class="roadmap-card">
                     <h3>Cybersecurity</h3>
                     <p>Master defensive and offensive security techniques to protect systems from vulnerabilities and cyber threats.</p>
-                    <a href="#" class="btn btn-primary">View Roadmap</a>
                 </div>
                 <div class="roadmap-card">
                     <h3>UI/UX Design</h3>
                     <p>Learn user-centered design principles and tools to create intuitive, accessible, and beautiful digital experiences.</p>
-                    <a href="#" class="btn btn-primary">View Roadmap</a>
                 </div>
             </div>
         </div>
@@ -172,39 +166,35 @@
             <p class="text-center">Learn from industry professionals with years of experience</p>
             <div class="instructor-cards">
                 <div class="instructor-card">
-                    <img src="https://via.placeholder.com/300x300" alt="Sarah Johnson" class="instructor-img">
+                    <img src="director.jpg" alt="Sarah Johnson" class="instructor-img">
                     <div class="instructor-info">
                         <h3>Sarah Johnson</h3>
                         <p class="instructor-specialty">Web Development</p>
                         <p>Senior Engineer at TechCorp with over 10 years of experience building scalable web applications.</p>
-                        <a href="#" class="btn btn-outline">Book a Session</a>
                     </div>
                 </div>
                 <div class="instructor-card">
-                    <img src="https://via.placeholder.com/300x300" alt="Michael Chen" class="instructor-img">
+                    <img src="setemi.jpeg" alt="Michael Chen" class="instructor-img">
                     <div class="instructor-info">
-                        <h3>Michael Chen</h3>
+                        <h3>Loye Setemi</h3>
                         <p class="instructor-specialty">Data Science</p>
                         <p>Data Science Lead with expertise in machine learning and AI implementation at scale.</p>
-                        <a href="#" class="btn btn-outline">Book a Session</a>
                     </div>
                 </div>
                 <div class="instructor-card">
-                    <img src="https://via.placeholder.com/300x300" alt="Aisha Patel" class="instructor-img">
+                    <img src="mark.jpeg" alt="Aisha Patel" class="instructor-img">
                     <div class="instructor-info">
-                        <h3>Aisha Patel</h3>
+                        <h3>Mark Zuckerberg</h3>
                         <p class="instructor-specialty">Mobile Development</p>
                         <p>Mobile architect who has shipped apps with millions of downloads on both iOS and Android.</p>
-                        <a href="#" class="btn btn-outline">Book a Session</a>
                     </div>
                 </div>
                 <div class="instructor-card">
-                    <img src="https://via.placeholder.com/300x300" alt="James Wilson" class="instructor-img">
+                    <img src="coordinator.jpg" alt="James Wilson" class="instructor-img">
                     <div class="instructor-info">
                         <h3>James Wilson</h3>
                         <p class="instructor-specialty">Cloud Computing</p>
                         <p>AWS Certified Solutions Architect with extensive experience in cloud migration strategies.</p>
-                        <a href="#" class="btn btn-outline">Book a Session</a>
                     </div>
                 </div>
             </div>
@@ -220,7 +210,7 @@
                     <div class="testimonial">
                         <p class="testimonial-content">"TechPathway completely transformed my career journey. The roadmap was clear, resources were relevant, and my instructor's guidance was invaluable. I landed my dream job as a frontend developer within 6 months!"</p>
                         <div class="testimonial-author">
-                            <img src="https://via.placeholder.com/100x100" alt="Alex Rivera" class="testimonial-avatar">
+                            <img src="person1.jpeg" alt="Alex Rivera" class="testimonial-avatar">
                             <div>
                                 <p class="testimonial-name">Alex Rivera</p>
                                 <p class="testimonial-position">Frontend Developer at InnoTech</p>
@@ -230,7 +220,7 @@
                     <div class="testimonial">
                         <p class="testimonial-content">"As someone switching careers from healthcare to tech, I was overwhelmed by where to start. TechPathway's data science roadmap gave me structure and confidence. The community support was amazing!"</p>
                         <div class="testimonial-author">
-                            <img src="https://via.placeholder.com/100x100" alt="Maya Johnson" class="testimonial-avatar">
+                            <img src="person3.jpeg" alt="Maya Johnson" class="testimonial-avatar">
                             <div>
                                 <p class="testimonial-name">Maya Johnson</p>
                                 <p class="testimonial-position">Data Analyst at HealthTech</p>
@@ -240,7 +230,7 @@
                     <div class="testimonial">
                         <p class="testimonial-content">"The 1-on-1 mentoring sessions were game-changers for me. My instructor helped me refine my portfolio and prepare for interviews. Their industry insights were priceless."</p>
                         <div class="testimonial-author">
-                            <img src="https://via.placeholder.com/100x100" alt="David Kim" class="testimonial-avatar">
+                            <img src="person2.jpeg" alt="David Kim" class="testimonial-avatar">
                             <div>
                                 <p class="testimonial-name">David Kim</p>
                                 <p class="testimonial-position">Mobile Developer at AppWorks</p>

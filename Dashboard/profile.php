@@ -62,8 +62,11 @@ $conn->close();
     <title>Profile Settings</title>
     <link rel="stylesheet" href="../css/userstyle.css">
     <style>
+        body{
+            overflow-y: auto;
+        }
         .container {
-            width: 600px;
+            /* width: 600px; */
             margin: auto;
             background: white;
             padding: 20px;

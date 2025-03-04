@@ -105,11 +105,12 @@
         }
       @media only screen and (max-width: 1100px){
         .outer-div{
-          width: 75%;
+          width: 90%;
           display: flex;
           flex-direction: column;
           justify-content: center;
           align-items: center;
+          height: 650px;
         }
         .inner-div{
           display: none;
@@ -127,6 +128,9 @@
         }
         #moveButton{
           margin-left: 0;
+        }
+        .things{
+          width: 100%;
         }
       }
     </style>

@@ -89,6 +89,12 @@ $stmt->close();
             padding: 10px;
             width: 100%;
         }
+        @media screen and (max-width: 768px) {
+            .dashboard-container {
+                grid-template-columns: 1fr;
+            }
+            
+        }
     </style>
 </head>
 <body>
