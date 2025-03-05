@@ -7,6 +7,77 @@
     <link rel="stylesheet" href="css/landingstyle.css">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .about-section {
+    padding: 60px 20px;
+    background-color: #f9f9f9; /* Adjust as needed */
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.about-content {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.about-text {
+    flex: 1;
+    min-width: 300px;
+    max-width: 600px;
+}
+
+.about-text h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+.about-text p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.about-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.about-image img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px; /* Optional for rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.stats-grid{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .about-content {
+        flex-direction: column;
+    }
+
+    .about-image img {
+        width: 100%;
+        max-height: 400px; /* Adjust max height to fit smaller screens */
+    }
+    .stats-grid{
+    flex-direction: column;
+    }
+}
+
+    </style>
 </head>
 <body>
     <!-- Header & Navigation -->
@@ -102,7 +173,7 @@
     </section>
 
     <!-- Stats Section -->
-    <section class="stats section">
+    <section class="stats-section">
         <div class="container">
             <div class="stats-grid">
                 <div class="stat">
@@ -165,14 +236,7 @@
             <h2 class="text-center">Meet Our Expert Instructors</h2>
             <p class="text-center">Learn from industry professionals with years of experience</p>
             <div class="instructor-cards">
-                <div class="instructor-card">
-                    <img src="director.jpg" alt="Sarah Johnson" class="instructor-img">
-                    <div class="instructor-info">
-                        <h3>Sarah Johnson</h3>
-                        <p class="instructor-specialty">Web Development</p>
-                        <p>Senior Engineer at TechCorp with over 10 years of experience building scalable web applications.</p>
-                    </div>
-                </div>
+                
                 <div class="instructor-card">
                     <img src="setemi.jpeg" alt="Michael Chen" class="instructor-img">
                     <div class="instructor-info">
@@ -192,7 +256,7 @@
                 <div class="instructor-card">
                     <img src="coordinator.jpg" alt="James Wilson" class="instructor-img">
                     <div class="instructor-info">
-                        <h3>James Wilson</h3>
+                        <h3>Sarah Johnson</h3>
                         <p class="instructor-specialty">Cloud Computing</p>
                         <p>AWS Certified Solutions Architect with extensive experience in cloud migration strategies.</p>
                     </div>
@@ -246,7 +310,7 @@
     </section>
 
     <!-- About Us Section -->
-    <section id="about" class="about section">
+    <section id="about" class="about-section">
         <div class="container">
             <div class="about-content">
                 <div class="about-text">
@@ -257,7 +321,7 @@
                     <p>Our team consists of industry veterans from leading tech companies who are passionate about sharing their knowledge and helping the next generation of tech talent succeed.</p>
                 </div>
                 <div class="about-image">
-                    <img src="https://via.placeholder.com/500x400" alt="TechPathway team">
+                    <img src="group.jpg" alt="TechPathway team">
                 </div>
             </div>
         </div>

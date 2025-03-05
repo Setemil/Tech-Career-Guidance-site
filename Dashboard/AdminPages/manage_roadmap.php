@@ -139,6 +139,15 @@ $roadmapResult = $roadmapStmt->get_result();
             padding: 8px;
             font-size: 16px;
         }
+        @media screen and (max-width: 768px) {
+            .form-container {
+                width: 90%;
+            }
+            .course-dropdown{
+                width: 90%;
+            }
+            
+        }
     </style>
 </head>
 <body>
@@ -193,16 +202,14 @@ $roadmapResult = $roadmapStmt->get_result();
 
         <!-- Add Roadmap Form -->
         <?php if ($selectedCourse): ?>
-            <div class="form-container">
+                <form action="add_roadmap.php" method="POST" class="form-container">
                 <h2>Add Roadmap Entry</h2>
-                <form action="add_roadmap.php" method="POST">
                     <input type="hidden" name="course_id" value="<?= $selectedCourse; ?>">
                     <input type="text" name="topic" placeholder="Enter Topic" required>
                     <textarea name="description" placeholder="Enter Description" required></textarea>
                     <textarea name="resource_links" placeholder="Enter Resource Links (comma-separated)" required></textarea>
                     <button type="submit">Add Entry</button>
                 </form>
-            </div>
         <?php endif; ?>
     </div>
 </body>

@@ -7,6 +7,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Outfit:wght@100..900&display=swap" rel="stylesheet"  />
     <script src="https://kit.fontawesome.com/b0bad06dff.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../css/style.css" />
@@ -103,7 +104,20 @@
           color: #6a679e;
           transition: 0.5s ease;
         }
+        .mobile-back-btn{
+          display: none;
+        }
       @media only screen and (max-width: 1100px){
+        .mobile-back-btn{
+          display: block;
+          position: absolute;
+          top: 15px;
+          left: 15px;
+          color: #6a679e;
+          font-size: 20px;
+          font-weight: bold;
+          text-decoration: none;
+        }
         .outer-div{
           width: 90%;
           display: flex;
@@ -137,6 +151,7 @@
   </head>
   <body>          
     <div class="outer-div">
+      <a href="../index.php" class="mobile-back-btn"><i class="fa-regular fa-arrow-left"></i>  Go back</a>
       <div class="inner-div">
         <a href="../index.php" id="back" >
           <button class="back_button">

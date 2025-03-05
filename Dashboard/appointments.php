@@ -49,6 +49,7 @@ $conn->close();
     <title>Appointments</title>
     <link rel="stylesheet" href="../css/userstyle.css">
     <style>
+        
         .appointments-container {
             width: 60%;
             margin: auto;

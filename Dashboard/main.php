@@ -40,6 +40,7 @@ $stmt->close();
         .main-content{
             padding: 0;
             margin: 0;
+            margin-top: 70px;
             overflow-x: hidden;
         }
         .dashboard-container {

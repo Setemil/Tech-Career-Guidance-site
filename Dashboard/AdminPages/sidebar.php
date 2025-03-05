@@ -17,6 +17,77 @@
     margin-left: 300px;
     padding: 20px;
 }
+/* Add these media queries and new classes to your existing CSS */
+@media screen and (max-width: 768px) {
+    .sidebar {
+        left: -100%; /* Hide sidebar off-screen */
+        transition: left 0.3s ease-in-out;
+        z-index: 1000;
+    }
+    .main-content {
+        margin-top: 50px;
+        margin-left: 0;
+        width: 100%;
+    }
+    .sidebar.open {
+        left: 0; /* Slide in when open class is added */
+    }
+    header{
+        width: 100%;
+    }
+    /* Menu toggle button styles */
+    .menu-toggle {
+        display: block;
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        z-index: 1100;
+        background: #817ec7;
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+    }
+
+    .menu-close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        color: white;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    /* Overlay to close menu when clicked outside */
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+    }
+
+    .sidebar-overlay.active {
+        display: block;
+    }
+}
+
+/* Ensure full-screen visibility on larger screens */
+@media screen and (min-width: 769px) {
+    .sidebar {
+        left: 0;
+        display: block !important;
+    }
+
+    .menu-toggle {
+        display: none;
+    }
+}
 </style>
 <div class="sidebar">
         <h2>Admin Panel</h2>
@@ -40,3 +111,65 @@
             </li>
         </ul>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    // Only add toggle functionality on smaller screens
+    if (window.matchMedia('(max-width: 768px)').matches) {
+        const sidebar = document.querySelector('.sidebar');
+        const menuOpenBtn = document.createElement('button');
+        const menuCloseBtn = document.createElement('button');
+        const overlay = document.createElement('div');
+
+        // Create menu open button
+        menuOpenBtn.textContent = '☰ Menu';
+        menuOpenBtn.classList.add('menu-toggle', 'menu-open');
+        menuOpenBtn.setAttribute('aria-label', 'Open Menu');
+        document.body.appendChild(menuOpenBtn);
+
+        // Create menu close button
+        menuCloseBtn.innerHTML = '✕';
+        menuCloseBtn.classList.add('menu-toggle', 'menu-close');
+        menuCloseBtn.setAttribute('aria-label', 'Close Menu');
+        sidebar.insertBefore(menuCloseBtn, sidebar.firstChild);
+
+        // Create overlay
+        overlay.classList.add('sidebar-overlay');
+        document.body.appendChild(overlay);
+
+        // Open menu function
+        function openMenu() {
+            sidebar.classList.add('open');
+            overlay.classList.add('active');
+        }
+
+        // Close menu function
+        function closeMenu() {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+        }
+
+        // Event listeners
+        menuOpenBtn.addEventListener('click', openMenu);
+        menuCloseBtn.addEventListener('click', closeMenu);
+        overlay.addEventListener('click', closeMenu);
+
+        // Optional: Close menu when a sidebar link is clicked
+        const sidebarLinks = sidebar.querySelectorAll('a');
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    closeMenu();
+                }
+            });
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+            }
+        });
+    }
+});
+    </script>
