@@ -3,12 +3,6 @@
 session_start(); 
 require_once '../../LoginPage/conn.php'; 
 
-if (!isset($_SESSION['name'])) {
-    header("Location: ../../LoginPage/index.php"); // Redirect to login page
-    exit();
-}
-include '../../LoginPage/conn.php'; 
-
 // Check if roadmap ID is provided
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     die("Invalid request.");

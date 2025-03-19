@@ -1,5 +1,6 @@
 <?php
-include '../../LoginPage/conn.php';
+session_start();
+require_once '../../LoginPage/conn.php';
 
 if (isset($_GET['id']) && isset($_GET['course_id'])) {
     $id = $_GET['id'];

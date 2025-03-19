@@ -2,11 +2,6 @@
 session_start();
 require_once '../../LoginPage/conn.php';
 
-if (!isset($_SESSION['name'])) {
-    header("Location: ../../LoginPage/index.php");
-    exit();
-}
-
 if (!isset($_GET['instructor_id'])) {
     header("Location: instructors.php");
     exit();

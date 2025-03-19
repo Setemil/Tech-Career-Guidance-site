@@ -1,5 +1,6 @@
 <?php
-include '../../LoginPage/conn.php';
+session_start();
+require_once '../../LoginPage/conn.php';
 
 // Fetch courses for selection
 $courseQuery = "SELECT id, course_name FROM courses";
@@ -11,9 +12,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $phone = $_POST['phone'];
     $courses = $_POST['courses'] ?? [];
 
-    // Insert instructor
-    $stmt = $conn->prepare("INSERT INTO instructors (name, email, phone) VALUES (?, ?, ?)");
-    $stmt->bind_param("sss", $name, $email, $phone);
+    // Set and hash default password
+    $defaultPassword = "12345678"; // you can change this to whatever default you prefer
+    $hashedPassword = password_hash($defaultPassword, PASSWORD_DEFAULT);
+
+    // Insert instructor with password
+    $stmt = $conn->prepare("INSERT INTO instructors (name, email, phone, password) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("ssss", $name, $email, $phone, $hashedPassword);
 
     if ($stmt->execute()) {
         $instructor_id = $stmt->insert_id;
@@ -26,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $linkStmt->close();
         }
 
-        header("Location: instructors.php?success=Instructor added successfully");
+        header("Location: instructors.php?success=Instructor added successfully with default password: $defaultPassword");
         exit();
     } else {
         header("Location: add_instructor.php?error=Failed to add instructor");

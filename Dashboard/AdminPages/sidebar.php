@@ -1,3 +1,11 @@
+<?php 
+    
+if (!isset($_SESSION['username'])) {
+    header("Location: ../../LoginPage/index.php"); // Redirect to login page
+    exit();
+}
+?>
+
 <style>
     .sidebar {
     width: 250px;

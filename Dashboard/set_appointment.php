@@ -149,6 +149,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['book_appointment'])) 
     <div class="container">
         <h1>Book an Appointment</h1>
         <a href="appointments.php" class="button">Go back</a>
+        <br><br>
         <?php if (isset($_SESSION['success_message'])): ?>
             <p class="success"><?php echo $_SESSION['success_message']; unset($_SESSION['success_message']); ?></p>
         <?php elseif (isset($_SESSION['error_message'])): ?>

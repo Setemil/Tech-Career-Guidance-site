@@ -2,11 +2,6 @@
 session_start();
 require_once '../../LoginPage/conn.php';
 
-if (!isset($_SESSION['name'])) {
-    header("Location: ../../LoginPage/index.php");
-    exit();
-}
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $instructor_id = intval($_POST['instructor_id']);
     $name = trim($_POST['name']);

@@ -2,12 +2,6 @@
 session_start();
 require_once '../../LoginPage/conn.php'; // Database connection
 
-// Ensure admin is logged in
-if (!isset($_SESSION['name'])) {
-    header("Location: ../../LoginPage/index.php");
-    exit();
-}
-
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $title = trim($_POST['title']);

@@ -2,14 +2,8 @@
 session_start();
 require_once '../../LoginPage/conn.php';
 
-// Ensure admin is logged in
-if (!isset($_SESSION['name'])) {
-    header("Location: ../../LoginPage/index.php");
-    exit();
-}
-
 // Fetch admin details and verify role
-$admin_name = $_SESSION['name'];
+$admin_name = $_SESSION['username'];
 $query = "SELECT student_id, name, university_email, role FROM student WHERE name = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("s", $admin_name);

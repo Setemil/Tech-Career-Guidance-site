@@ -1,5 +1,4 @@
 <?php
-
 include 'conn.php'; 
 
 $username = $_POST['username'];
@@ -17,11 +16,20 @@ if ($password !== $confirmPassword) {
 }
 
 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-$stmt = $conn->prepare("INSERT INTO student (name, university_email, password, role) VALUES (?, ?, ?,'student')");
+$stmt = $conn->prepare("INSERT INTO student (name, university_email, password, role) VALUES (?, ?, ?, 'student')");
 $stmt->bind_param("sss", $username, $email, $hashedPassword);
 
 if ($stmt->execute()) {
-  header("Location: index.php"); 
+  // Get the newly inserted student ID
+  $student_id = $conn->insert_id;
+  
+  // Start session and store both username and student_id
+  session_start();
+  $_SESSION['username'] = $username;
+  $_SESSION['student_id'] = $student_id;
+  $_SESSION['name'] = $username; // Also set name since it's used in recommendations.php
+  
+  header("Location: ../Dashboard/survey.php"); 
   exit();
 } else {
   header("Location: signup.php?error=sqlerror"); 

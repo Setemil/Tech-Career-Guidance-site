@@ -1,5 +1,6 @@
 <?php
-include '../../LoginPage/conn.php';
+session_start();
+require_once '../../LoginPage/conn.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $course_name = $_POST['course_name'];

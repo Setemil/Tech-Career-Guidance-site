@@ -2,12 +2,6 @@
 session_start();
 require_once '../../LoginPage/conn.php';
 
-// Ensure admin is logged in
-if (!isset($_SESSION['name'])) {
-    header("Location: ../../LoginPage/index.php");
-    exit();
-}
-
 // Fetch appointments with course details
 $query = "SELECT 
             s.name AS student_name, 

@@ -3,12 +3,6 @@
 session_start(); 
 require_once '../../LoginPage/conn.php'; 
 
-if (!isset($_SESSION['name'])) {
-    header("Location: ../../LoginPage/index.php"); // Redirect to login page
-    exit();
-}
-include '../../LoginPage/conn.php';
-
 // Fetch instructors
 $sql = "SELECT instructors.id, instructors.name, instructors.email, instructors.phone, 
                GROUP_CONCAT(courses.course_name SEPARATOR ', ') AS courses 

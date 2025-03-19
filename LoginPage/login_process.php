@@ -1,50 +1,63 @@
 <?php
 session_start(); // Start the session
+require_once 'conn.php'; // Database connection
 
-// Include the database connection file
-require_once 'conn.php';
-
-// Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get username and password from form
     $username = $_POST["name"];
     $password = $_POST["password"];
 
-    // Prepare SQL statement to prevent SQL injection
+    // Check if user exists in student table first
     $stmt = $conn->prepare("SELECT student_id, password, role FROM student WHERE name = ?");
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
 
-    // Check if a row is found
-    if ($result->num_rows == 1) {
+    if ($result->num_rows === 1) {
         $row = $result->fetch_assoc();
-
-        // Verify the password (using password_verify if you're hashing passwords)
         if (password_verify($password, $row["password"])) {
-            $_SESSION["student_id"] = $row['student_id']; 
-            $_SESSION["name"] = $username;
-            $_SESSION['role'] = $row['role'];
+            $_SESSION["student_id"] = $row['student_id'];
+            $_SESSION["username"] = $username;
+            $_SESSION["role"] = $row["role"];
 
-            if ($row['role'] === 'admin') {
+            if ($row["role"] === "admin") {
                 header("Location: ../Dashboard/AdminPages/admin.php");
             } else {
-                header("Location: ../Dashboard/main.php");
+                header("Location: ../Dashboard/main.php"); 
             }
             exit();
         } else {
             $error = "Incorrect password.";
         }
     } else {
-        $error = "Incorrect username.";
+        // If not in student table, check instructor table
+        $stmt = $conn->prepare("SELECT id, password FROM instructors WHERE name = ?");
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $instructorResult = $stmt->get_result();
+
+        if ($instructorResult->num_rows === 1) {
+            $instructor = $instructorResult->fetch_assoc();
+            if (password_verify($password, $instructor["password"])) {
+                $_SESSION["user_id"] = $instructor["id"];
+                $_SESSION["name"] = $username;
+                $_SESSION["role"] = "instructor";
+
+                header("Location: ../Dashboard/InstructorPages/main.php"); // instructor dashboard
+                exit();
+            } else {
+                $error = "Incorrect password.";
+            }
+        } else {
+            $error = "Incorrect username.";
+        }
     }
 
     $stmt->close();
 }
 
-// Redirect if there's an error
+// Redirect with error
 if (isset($error)) {
-    header("Location: index.php?error=" . urlencode($error)); 
+    header("Location: index.php?error=" . urlencode($error));
     exit();
 }
 ?>

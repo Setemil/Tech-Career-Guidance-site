@@ -1,32 +1,28 @@
 <?php
 session_start();
-require_once '../LoginPage/conn.php'; // Include the database connection
+require_once '../LoginPage/conn.php';
 
-// Check if the user is logged in
-if (!isset($_SESSION['name'])) {
+// Check if user is logged in
+if (!isset($_SESSION['student_id'])) {
     header("Location: ../LoginPage/index.php");
     exit();
 }
 
-// Retrieve the logged-in student's name and ID
-$username = $_SESSION['name'];
+$student_id = $_SESSION['student_id'];
 
-$stmt = $conn->prepare("SELECT student_id FROM student WHERE name = ?");
-$stmt->bind_param("s", $username);
+// Fetch user details
+$stmt = $conn->prepare("SELECT student_id, name, university_email FROM student WHERE student_id = ?");
+$stmt->bind_param("i", $student_id);
 $stmt->execute();
 $result = $stmt->get_result();
 
-// Fetch user details
 if ($result->num_rows === 1) {
     $student = $result->fetch_assoc();
-    $student_id = $student['student_id'];
 } else {
-    // If no matching user is found, force logout
     session_destroy();
     header("Location: ../LoginPage/index.php?error=" . urlencode("Session expired. Please log in again."));
     exit();
 }
-
 $stmt->close();
 ?>
 <!DOCTYPE html>
@@ -45,9 +41,14 @@ $stmt->close();
         }
         .dashboard-container {
             display: grid;
-            grid-template-columns: 2fr 1fr;
+            grid-template-columns:  1fr 1fr;
             gap: 20px;
             padding: 20px;
+        }
+        .cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
         }
         .card {
             background: #fff;
@@ -94,6 +95,9 @@ $stmt->close();
             .dashboard-container {
                 grid-template-columns: 1fr;
             }
+            .cards {
+                grid-template-columns: 1fr;
+            }
             
         }
     </style>
@@ -102,57 +106,56 @@ $stmt->close();
     <?php include 'menu-bar.php'; ?>
     <div class="main-content">
         <div class="dashboard-container">
-            <div>
-            <div class="card">
-                    <h2>Recently Viewed Courses</h2>
-                    <div class="courses-grid">
-                        <?php
-                        $sql = "SELECT * FROM courses ORDER BY RAND() LIMIT 4";
-                        $result = $conn->query($sql);
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
-                                echo "<div class='course-card'>
-                                        <a href='roadmap.php?course_id=" . htmlspecialchars($row['id']) . "' style='text-decoration: none; color: inherit;'>
-                                            <p>" . htmlspecialchars($row['course_name']) . "</p>
-                                        </a>
-                                    </div>";
+            <div class="cards">
+                <div class="card">
+                        <h2>Recently Viewed Courses</h2>
+                        <div class="courses-grid">
+                            <?php
+                            $sql = "SELECT * FROM courses ORDER BY RAND() LIMIT 4";
+                            $result = $conn->query($sql);
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
+                                    echo "<div class='course-card'>
+                                            <a href='roadmap.php?course_id=" . htmlspecialchars($row['id']) . "' style='text-decoration: none; color: inherit;'>
+                                                <p>" . htmlspecialchars($row['course_name']) . "</p>
+                                            </a>
+                                        </div>";
+                                }
+                            } else {
+                                echo "<p>No recent courses viewed.</p>";
                             }
-                        } else {
-                            echo "<p>No recent courses viewed.</p>";
-                        }
+                            ?>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h2>Upcoming Appointments</h2>
+                        <?php
+                            $sql = "SELECT a.appointment_time, i.name AS instructor_name 
+                                    FROM appointments a
+                                    JOIN instructors i ON a.instructor_id = i.id 
+                                    WHERE a.student_id = ?
+                                    ORDER BY a.appointment_time ASC 
+                                    LIMIT 1";
+
+                            $stmt = $conn->prepare($sql);
+                            $stmt->bind_param("i", $student_id);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+
+                            if ($result->num_rows > 0) {
+                                $row = $result->fetch_assoc();
+                                echo "<p>With: " . htmlspecialchars($row['instructor_name']) . "</p>";
+                                echo "<p>Date: " . htmlspecialchars($row['appointment_time']) . "</p>";
+                            } else {
+                                echo "<p>No upcoming appointments.</p>";
+                            }
+
+                            $stmt->close();
                         ?>
+                        <a href="set_appointment.php" class="appointment-btn">Set New Appointment</a>
                     </div>
                 </div>
-
-                <div class="card">
-                    <h2>Upcoming Appointments</h2>
-                    <?php
-                        $sql = "SELECT a.appointment_time, i.name AS instructor_name 
-                                FROM appointments a
-                                JOIN instructors i ON a.instructor_id = i.id 
-                                WHERE a.student_id = ?
-                                ORDER BY a.appointment_time ASC 
-                                LIMIT 1";
-
-                        $stmt = $conn->prepare($sql);
-                        $stmt->bind_param("i", $student_id);
-                        $stmt->execute();
-                        $result = $stmt->get_result();
-
-                        if ($result->num_rows > 0) {
-                            $row = $result->fetch_assoc();
-                            echo "<p>With: " . htmlspecialchars($row['instructor_name']) . "</p>";
-                            echo "<p>Date: " . htmlspecialchars($row['appointment_time']) . "</p>";
-                        } else {
-                            echo "<p>No upcoming appointments.</p>";
-                        }
-
-                        $stmt->close();
-                    ?>
-                    <a href="set_appointment.php" class="appointment-btn">Set New Appointment</a>
-                </div>
-            </div>
-            <div>
                 <div class="card">
                     <h2>Latest Tech News</h2>
                     <?php
@@ -175,6 +178,8 @@ $stmt->close();
                     <p><strong>Where do I find learning resources?</strong><br>All courses contain links to external learning platforms.</p>
                     <p><strong>Who can I contact for support?</strong><br>Email us at support@yourwebsite.com</p>
                 </div>
+            <div>
+                
 
         </div>
         </div>

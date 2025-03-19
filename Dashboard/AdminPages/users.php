@@ -1,13 +1,7 @@
 <?php
-
 session_start(); 
 require_once '../../LoginPage/conn.php'; 
 
-if (!isset($_SESSION['name'])) {
-    header("Location: ../../LoginPage/index.php"); // Redirect to login page
-    exit();
-}
-include '../../LoginPage/conn.php'; 
 
 $sql = "SELECT name, university_email, gender, phone FROM student WHERE role = 'student'";
 $result = $conn->query($sql);

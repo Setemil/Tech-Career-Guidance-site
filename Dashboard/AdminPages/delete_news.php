@@ -2,12 +2,6 @@
 session_start();
 require_once '../../LoginPage/conn.php'; // Database connection
 
-// Ensure admin is logged in
-if (!isset($_SESSION['name'])) {
-    header("Location: ../../LoginPage/index.php");
-    exit();
-}
-
 // Check if news ID is provided
 if (isset($_POST['id'])) {
     $news_id = intval($_POST['id']);

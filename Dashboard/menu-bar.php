@@ -8,12 +8,20 @@
             --dark: #333333;
             --transition: all 0.3s ease;
         }
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
         header {
             background: white;
             padding: 15px;
             box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
             text-align: center;
+        }
+        .header-container h2{
+            color: var(--white);
         }
         .main-content{
             padding: 0;
@@ -31,10 +39,11 @@
 
         .header-container {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             align-items: center;
-            max-width: 1200px;
+            max-width: 100%;
             margin: 0 auto;
+            gap: 1rem;
         }
 
         .brand-logo {
@@ -185,8 +194,17 @@
             font-size: 1.5rem;
             cursor: pointer;
         }
+        .logout-second{
+            display: none;
+        }
 
         @media screen and (max-width: 768px) {
+            .logout-main{
+                display: none;
+            }
+            .logout-second{
+                display: none;
+            }
             .nav-links {
                 position: fixed;
                 top: 0;
@@ -227,6 +245,12 @@
                 justify-content: center;
                 margin-top: 1rem;
             }
+            .header-container h2{
+                font-size: 1rem;
+            }
+            .header-left span{
+                font-size: 1.2rem;
+            }
         }
     </style>
 </head>
@@ -239,7 +263,10 @@
                     <span>TechCareers</span>
                 </a>
             </div>
-            <h2>Welcome, <?php echo isset($student['name']) ? htmlspecialchars($student['name']) : 'Guest'; ?></h2>
+            <div>
+                <h2>Welcome, <?php echo isset($student['name']) ? htmlspecialchars($student['name']) : 'Guest'; ?></h2>
+            </div>
+            <div>
             <nav>
                 <button class="mobile-menu-btn">
                     <i class="fas fa-bars"></i>
@@ -254,18 +281,33 @@
                         <i class="bi bi-house-door"></i>Dashboard
                     </a>
                     <a href="paths.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'paths.php' ? 'active' : '' ?>">
-                        <i class="bi bi-diagram-3"></i>Career Paths
+                        <i class="bi bi-diagram-3"></i>Roadmaps
                     </a>
                     <a href="updates.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'updates.php' ? 'active' : '' ?>">
-                        <i class="bi bi-book"></i>Tech Updates
+                        <i class="bi bi-book"></i>Updates
                     </a>
                     <a href="appointments.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'appointments.php' ? 'active' : '' ?>">
-                        <i class="bi bi-calendar"></i>Consultation Sessions
+                        <i class="bi bi-calendar"></i>Appointments
+                    </a>
+                    <a href="recommendations.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'recommendations.php' ? 'active' : '' ?>">
+                        <i class="bi bi-person"></i>Recommendations
                     </a>
                     <a href="profile.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'profile.php' ? 'active' : '' ?>">
-                        <i class="bi bi-person"></i>Profile Settings
+                        <i class="bi bi-person"></i>Settings
                     </a>
-                    <div style="width: 7.5%">
+                    
+                </div>
+                <div style="width: 7.5%" class="logout-second">
+                    <a href="logout.php">
+                        <button class="Btn" href="logout.php">
+                            <div class="sign"><svg viewBox="0 0 512 512"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path></svg></div>
+                            <div class="text">Logout</div>
+                        </button>
+                    </a>
+                </div>
+            </nav>
+            </div>
+            <div style="width: 7.5%" class="logout-main">
                 <a href="logout.php">
                     <button class="Btn" href="logout.php">
                         <div class="sign"><svg viewBox="0 0 512 512"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path></svg></div>
@@ -273,8 +315,6 @@
                     </button>
                 </a>
             </div>
-                </div>
-            </nav>
         </div>
     </header>
     <script src="../js/userscript.js"></script>

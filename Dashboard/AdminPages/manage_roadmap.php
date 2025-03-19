@@ -3,12 +3,6 @@
 session_start(); 
 require_once '../../LoginPage/conn.php'; 
 
-if (!isset($_SESSION['name'])) {
-    header("Location: ../../LoginPage/index.php"); // Redirect to login page
-    exit();
-}
-include '../../LoginPage/conn.php'; 
-
 // Fetch all courses
 $coursesQuery = "SELECT id, course_name FROM courses";
 $coursesResult = $conn->query($coursesQuery);
