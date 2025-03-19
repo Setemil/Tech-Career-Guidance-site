@@ -2,14 +2,8 @@
 session_start();
 require_once '../LoginPage/conn.php';
 
-// Check if the user is logged in
-if (!isset($_SESSION['name'])) {
-    header("Location: ../LoginPage/index.php");
-    exit();
-}
-
 // Retrieve the logged-in student's name
-$username = $_SESSION['name'];
+$username = $_SESSION['username'];
 $stmt = $conn->prepare("SELECT name FROM student WHERE name = ?");
 $stmt->bind_param("s", $username);
 $stmt->execute();

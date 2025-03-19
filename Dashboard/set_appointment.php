@@ -2,12 +2,6 @@
 session_start();
 require_once '../LoginPage/conn.php'; // Database connection
 
-// Ensure the student is logged in
-if (!isset($_SESSION['name'])) {
-    header("Location: ../LoginPage/index.php");
-    exit();
-}
-
 // Retrieve student ID from session
 $stmt = $conn->prepare("SELECT student_id FROM student WHERE name = ?");
 $stmt->bind_param("s", $_SESSION['name']);

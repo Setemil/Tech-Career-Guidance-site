@@ -2,12 +2,6 @@
 session_start();
 require_once '../LoginPage/conn.php';
 
-// Check if user is logged in
-if (!isset($_SESSION['student_id'])) {
-    header("Location: ../LoginPage/index.php");
-    exit();
-}
-
 $student_id = $_SESSION['student_id'];
 
 // Fetch user details

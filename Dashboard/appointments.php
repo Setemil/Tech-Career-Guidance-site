@@ -1,13 +1,8 @@
 <?php
 session_start();
-require_once '../LoginPage/conn.php'; 
+require_once '../LoginPage/conn.php';
 
-if (!isset($_SESSION['name'])) {
-    header("Location: ../LoginPage/index.php");
-    exit();
-}
-
-$username = $_SESSION['name'];
+$username = $_SESSION['username'];
 
 $stmt = $conn->prepare("SELECT name FROM student WHERE name = ?");
 $stmt->bind_param("s", $username);
@@ -25,7 +20,7 @@ if ($result->num_rows === 1) {
 $stmt->close();
 
 // Fetch all booked appointments for the logged-in student
-$student_name = $_SESSION['name'];
+$student_name = $_SESSION['username'];
 
 $query = "SELECT i.name AS instructor_name, c.course_name, a.appointment_time 
           FROM appointments a
