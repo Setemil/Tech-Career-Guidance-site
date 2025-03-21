@@ -184,8 +184,8 @@ $result = $stmt->get_result();
 
 while ($row = $result->fetch_assoc()) {
     if (!isset($recommended_courses[$row['id']])) {
-        $row['match_reason'] = 'Aligns with your career goal';
-        $row['match_score'] = 80;
+        $row['match_reason'] = 'Aligns with your career goal, <strong>might not match other preferences</strong>';
+        $row['match_score'] = 50;
         $recommended_courses[$row['id']] = $row;
     }
 }
@@ -468,9 +468,10 @@ while ($row = $mapping_result->fetch_assoc()) {
                                 <span class="badge bg-success match-badge"><?php echo $course['match_score']; ?>% Match</span>
                                 <?php
                                     // Default image if none provided
-                                    $image_url = !empty($course['course_image']) ? $course['course_image'] : 'https://via.placeholder.com/400x200?text=Course+Image';
+                                    $image_url = !empty($course['course_image']) ? '/MainBySetemi/' . $course['course_image'] : 'https://via.placeholder.com/400x200?text=Course+Image';
                                 ?>
                                 <img src="<?php echo $image_url; ?>" class="card-img-top course-image" alt="<?php echo htmlspecialchars($course['course_name']); ?>">
+
                                 <div class="card-body">
                                     <h5 class="card-title">
                                         <?php echo htmlspecialchars($course['course_name']); ?>
@@ -481,7 +482,6 @@ while ($row = $mapping_result->fetch_assoc()) {
                                     </h5>
                                     <h6 class="card-subtitle mb-2"><?php echo htmlspecialchars($course['provider']); ?></h6>
                                     <p class="card-text"><?php echo htmlspecialchars(substr($course['description'], 0, 120)) . '...'; ?></p>
-                                    <p class="small text-muted"><i class="fas fa-star text-warning"></i> <?php echo htmlspecialchars($course['rating']); ?>/5 • <?php echo htmlspecialchars($course['duration']); ?> hours</p>
                                     <p class="small"><strong>Why recommended:</strong> <?php echo $course['match_reason']; ?></p>
                                     <div class="d-flex justify-content-between">
                                         <a href="course-details.php?id=<?php echo $course['id']; ?>" class="btn btn-primary">View Details</a>
@@ -582,7 +582,7 @@ while ($row = $mapping_result->fetch_assoc()) {
                 console.log("Saving course ID: " + courseId);
                 
                 // Example AJAX implementation:
-                /*
+                
                 fetch('save_course.php', {
                     method: 'POST',
                     headers: {
@@ -598,7 +598,7 @@ while ($row = $mapping_result->fetch_assoc()) {
                         console.error('Error saving course');
                     }
                 });
-                */
+                
             }
             
             // Function to remove course from wishlist (implement AJAX call)

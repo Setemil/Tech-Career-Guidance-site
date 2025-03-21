@@ -89,8 +89,7 @@ $result = $conn->query($sql);
                 <?php while ($row = $result->fetch_assoc()): ?>
                     <div class="course-card">
                         <img src="<?php echo '/MainBySetemi/' . $row['course_image']; ?>" 
-                             alt="<?php echo htmlspecialchars($row['course_name']); ?>" 
-                             onerror="this.src='/MainBySetemi/uploads/default.jpg'">
+                             alt="<?php echo htmlspecialchars($row['course_name']); ?>">
                         <h3><?php echo htmlspecialchars($row['course_name']); ?></h3>
                         <a href="manage_roadmap.php?course_id=<?= $row['id'] ?>" class="cta-button">Edit Roadmap</a>
                         <!-- Delete Course Button -->
