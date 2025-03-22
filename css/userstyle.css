@@ -100,24 +100,6 @@ a{
    visibility: visible;
 }
 
-.search-container {
-    display: flex;
-    align-items: center;
-    background-color: white;
-    border-radius: 20px; 
-    padding: 5px 10px;
-    margin-left: 10px;
-    flex-grow: 1;
-    max-width: 400px; 
-}
-
-.search-container input {
-    border: none;
-    outline: none;
-    flex-grow: 1;
-    margin-left: 10px;
-}
-
 .header h2 {
     margin: 0;
     font-size: 1.25rem;

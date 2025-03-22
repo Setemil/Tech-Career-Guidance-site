@@ -4,7 +4,7 @@ require_once '../LoginPage/conn.php';
 
 
 // Retrieve student ID from session
-$username = $_SESSION['username'];
+$username = $_SESSION['student_id'];
 $stmt = $conn->prepare("SELECT student_id FROM student WHERE name = ?");
 $stmt->bind_param("s", $username);
 $stmt->execute();

@@ -1,11 +1,12 @@
 <?php
 session_start();
-require_once '../LoginPage/conn.php'; 
+require_once '../LoginPage/conn.php';
 
-$username = $_SESSION['username'];
+$student_id = $_SESSION['student_id'];
 
-$stmt = $conn->prepare("SELECT name FROM student WHERE name = ?");
-$stmt->bind_param("s", $username);
+// Fetch user details
+$stmt = $conn->prepare("SELECT student_id, name, university_email FROM student WHERE student_id = ?");
+$stmt->bind_param("i", $student_id);
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -16,15 +17,53 @@ if ($result->num_rows === 1) {
     header("Location: ../LoginPage/index.php?error=" . urlencode("Session expired. Please log in again."));
     exit();
 }
-
 $stmt->close();
 
-// Fetch courses with their IDs
-$courseQuery = "SELECT id, course_name, course_image FROM courses ORDER BY course_name ASC"; 
-$courseResult = $conn->query($courseQuery);
+// Fetch Saved Courses
+$savedCourses = [];
+$savedCourseIds = [];
+
+$savedQuery = $conn->prepare("
+    SELECT c.id, c.course_name, c.course_image
+    FROM courses c
+    INNER JOIN saved_courses s ON c.id = s.course_id
+    WHERE s.student_id = ?
+");
+$savedQuery->bind_param("i", $student_id);
+$savedQuery->execute();
+$savedResult = $savedQuery->get_result();
+
+while ($row = $savedResult->fetch_assoc()) {
+    $savedCourses[] = $row;
+    $savedCourseIds[] = $row['id'];
+}
+$savedQuery->close();
+
+// Fetch Other Courses (NOT in saved list)
+$otherCourses = [];
+if (!empty($savedCourseIds)) {
+    $placeholders = implode(',', array_fill(0, count($savedCourseIds), '?'));
+    $query = "SELECT id, course_name, course_image FROM courses WHERE id NOT IN ($placeholders)";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param(str_repeat('i', count($savedCourseIds)), ...$savedCourseIds);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    while ($row = $result->fetch_assoc()) {
+        $otherCourses[] = $row;
+    }
+    $stmt->close();
+} else {
+    // If no saved courses, show all as other
+    $result = $conn->query("SELECT id, course_name, course_image FROM courses");
+    while ($row = $result->fetch_assoc()) {
+        $otherCourses[] = $row;
+    }
+}
 
 $conn->close();
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,6 +105,10 @@ $conn->close();
             width: 80%;
             text-align: center;
         }
+        .main-content {
+            margin-top: 20px;
+            text-align: center;
+        }
         @media screen and (max-width: 768px) {
             .cards {
                 grid-template-columns: 1fr;
@@ -81,17 +124,42 @@ $conn->close();
         <header>
             <h2>Career Paths</h2>
         </header>
+
+        <h3>Your Saved Courses</h3>
         <div class="cards">
-            <?php while ($course = $courseResult->fetch_assoc()): ?>
-                <div class="card">
-                    <img src="../<?= htmlspecialchars($course['course_image']) ?>" alt="<?= htmlspecialchars($course['course_name']) ?>">
-                    <div class="card-content">
-                        <h3><?= htmlspecialchars($course['course_name']) ?></h3>
-                        <a href="roadmap.php?course_id=<?= $course['id'] ?>" class="cta-button">Explore Path</a>
+            <?php if (!empty($savedCourses)): ?>
+                <?php foreach ($savedCourses as $course): ?>
+                    <div class="card">
+                        <img src="../<?= htmlspecialchars($course['course_image']) ?>" alt="<?= htmlspecialchars($course['course_name']) ?>">
+                        <div class="card-content">
+                            <h3><?= htmlspecialchars($course['course_name']) ?></h3>
+                            <a href="roadmap.php?course_id=<?= $course['id'] ?>" class="cta-button">Explore Path</a>
+                        </div>
                     </div>
-                </div>
-            <?php endwhile; ?>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>You haven't saved any courses yet.</p>
+            <?php endif; ?>
+        </div>
+
+        <h3>Explore Other Courses</h3>
+        <div class="cards">
+            <?php if (!empty($otherCourses)): ?>
+                <?php foreach ($otherCourses as $course): ?>
+                    <div class="card">
+                        <img src="../<?= htmlspecialchars($course['course_image']) ?>" alt="<?= htmlspecialchars($course['course_name']) ?>">
+                        <div class="card-content">
+                            <h3><?= htmlspecialchars($course['course_name']) ?></h3>
+                            <a href="roadmap.php?course_id=<?= $course['id'] ?>" class="cta-button">Explore Path</a>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p style="margin-left: 20px;">No other courses available.</p>
+            <?php endif; ?>
         </div>
     </div>
+
+
 </body>
 </html>

@@ -50,19 +50,28 @@ $result = $conn->query($sql);
         .delete-btn:hover {
             background-color: #cc0000;
         }
-        .cta-button{
+        .cta-button, .edit-button{
             display: block;
             width: 80%;
             padding: 8px 12px;
             text-align: center;
-            background-color: #3498db;
+            margin-top: 10px;
             color: white;
             border-radius: 5px;
             text-decoration: none;
             transition: background-color 0.3s;
         }
+        .cta-button{
+            background-color: #3498db;
+        }
         .cta-button:hover{
             background-color:rgb(40, 118, 171);
+        }
+        .edit-button{
+            background-color: #817ec7;
+        }
+        .edit-button:hover{
+            background-color:rgb(107, 105, 164);
         }
     </style>
 </head>
@@ -92,6 +101,7 @@ $result = $conn->query($sql);
                              alt="<?php echo htmlspecialchars($row['course_name']); ?>">
                         <h3><?php echo htmlspecialchars($row['course_name']); ?></h3>
                         <a href="manage_roadmap.php?course_id=<?= $row['id'] ?>" class="cta-button">Edit Roadmap</a>
+                        <a href="edit-course.php?course_id=<?= $row['id'] ?>" class="edit-button">Edit Course Details</a>
                         <!-- Delete Course Button -->
                             <a href="delete_course.php?course_id=<?php echo $row['id']; ?>"
                                 class="delete-btn"

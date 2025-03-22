@@ -3,7 +3,7 @@ session_start();
 require_once '../../LoginPage/conn.php'; 
 
 
-$sql = "SELECT name, university_email, gender, phone FROM student WHERE role = 'student'";
+$sql = "SELECT name, university_email, gender, phone, age FROM student WHERE role = 'student'";
 $result = $conn->query($sql);
 
 $conn->close();
@@ -29,6 +29,7 @@ $conn->close();
                     <th>Username</th>
                     <th>Email</th>
                     <th>Gender</th>
+                    <th>Age</th>
                     <th>Phone Number</th>
                 </tr>
             </thead>
@@ -39,6 +40,7 @@ $conn->close();
                             <td><?php echo !empty($row['name']) ? $row['name'] : 'Not provided'; ?></td>
                             <td><?php echo !empty($row['university_email']) ? $row['university_email'] : 'Not provided'; ?></td>
                             <td><?php echo !empty($row['gender']) ? $row['gender'] : 'Not provided'; ?></td>
+                            <td><?php echo !empty($row['age']) ? $row['age'] : 'Not provided'; ?></td>
                             <td><?php echo !empty($row['phone']) ? $row['phone'] : 'Not provided'; ?></td>
                         </tr>
                     <?php endwhile; ?>

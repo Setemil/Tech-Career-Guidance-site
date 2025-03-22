@@ -90,6 +90,51 @@ while ($row = $languages_result->fetch_assoc()) {
     $languages[] = $row;
 }
 
+// Determine experience level filter logic
+$level_filters = [];
+switch (strtolower($experience_level)) {
+    case 'beginner':
+        $level_filters = ['Beginner'];
+        break;
+    case 'intermediate':
+        $level_filters = ['Beginner', 'Intermediate'];
+        break;
+    case 'advanced':
+        $level_filters = ['Beginner', 'Intermediate', 'Advanced'];
+        break;
+    default:
+        $level_filters = ['Beginner']; // fallback just in case
+}
+
+$level_placeholders = implode(',', array_fill(0, count($level_filters), '?'));
+
+// Second approach: Get courses that match the user's learning style
+$query = "
+    SELECT c.* 
+    FROM courses c
+    WHERE c.learning_style = ?
+    AND c.difficulty_level IN ($level_placeholders)
+    ORDER BY c.rating DESC
+    LIMIT 5
+";
+
+$types = "s" . str_repeat('s', count($level_filters));
+$params = array($learning_style);
+$params = array_merge($params, $level_filters);
+
+$stmt = $conn->prepare($query);
+$tmp = [];
+$tmp[] = $types;
+foreach ($params as &$param) {
+    $tmp[] = &$param;
+}
+call_user_func_array([$stmt, 'bind_param'], $tmp);
+
+$stmt->execute();
+$result = $stmt->get_result();
+// Convert filters to dynamic SQL placeholders
+
+
 // Build arrays of interest IDs and language IDs for use in queries
 $interest_ids = [];
 foreach ($interests as $interest) {
@@ -107,38 +152,32 @@ $recommended_courses = [];
 // First approach: Get courses that match the user's experience level and interests
 if (!empty($interest_ids)) {
     $interest_id_list = implode(',', array_fill(0, count($interest_ids), '?'));
-    
+
     $query = "
         SELECT c.*, ci.interest_id 
         FROM courses c
         JOIN course_interests ci ON c.id = ci.course_id
-        WHERE c.difficulty_level = ? 
+        WHERE c.difficulty_level IN ($level_placeholders)
         AND ci.interest_id IN ($interest_id_list)
         GROUP BY c.id
         ORDER BY c.rating DESC
     ";
-    
+
+    // Combine types: experience levels (s), interest ids (i)
+    $types = str_repeat('s', count($level_filters)) . str_repeat('i', count($interest_ids));
+    $params = array_merge($level_filters, $interest_ids);
+
     $stmt = $conn->prepare($query);
-    
-    // Build the parameter types string
-    $types = "s" . str_repeat("i", count($interest_ids));
-    
-    // Create array of parameters with references
-    $params = array($types);
-    $params[] = &$experience_level; // Add reference to experience_level
-    
-    // Add references to each interest_id
-    foreach ($interest_ids as $key => $value) {
-        $interest_ids[$key] = &$interest_ids[$key];
-        $params[] = &$interest_ids[$key];
+    $tmp = [];
+    $tmp[] = $types;
+    foreach ($params as &$param) {
+        $tmp[] = &$param;
     }
-    
-    // Call bind_param with the unpacked array
-    call_user_func_array([$stmt, 'bind_param'], $params);
-    
+    call_user_func_array([$stmt, 'bind_param'], $tmp);
+
     $stmt->execute();
     $result = $stmt->get_result();
-    
+
     while ($row = $result->fetch_assoc()) {
         $row['match_reason'] = 'Matches your experience level and interests';
         $row['match_score'] = 90;
@@ -146,49 +185,31 @@ if (!empty($interest_ids)) {
     }
 }
 
+
 // Second approach: Get courses that match the user's learning style
 $query = "
     SELECT c.* 
     FROM courses c
     WHERE c.learning_style = ?
+    AND c.difficulty_level IN ($level_placeholders)
     ORDER BY c.rating DESC
     LIMIT 5
 ";
 
-$stmt = $conn->prepare($query);
-$stmt->bind_param("s", $learning_style);
-$stmt->execute();
-$result = $stmt->get_result();
-
-while ($row = $result->fetch_assoc()) {
-    if (!isset($recommended_courses[$row['id']])) {
-        $row['match_reason'] = 'Matches your learning style';
-        $row['match_score'] = 75;
-        $recommended_courses[$row['id']] = $row;
-    }
-}
-
-// Third approach: Get courses related to the user's career goal
-$query = "
-    SELECT c.* 
-    FROM courses c
-    WHERE c.career_path = ?
-    ORDER BY c.rating DESC
-    LIMIT 5
-";
+$types = "s" . str_repeat('s', count($level_filters));
+$params = array($learning_style);
+$params = array_merge($params, $level_filters);
 
 $stmt = $conn->prepare($query);
-$stmt->bind_param("s", $career_goal);
+$tmp = [];
+$tmp[] = $types;
+foreach ($params as &$param) {
+    $tmp[] = &$param;
+}
+call_user_func_array([$stmt, 'bind_param'], $tmp);
+
 $stmt->execute();
 $result = $stmt->get_result();
-
-while ($row = $result->fetch_assoc()) {
-    if (!isset($recommended_courses[$row['id']])) {
-        $row['match_reason'] = 'Aligns with your career goal, <strong>might not match other preferences</strong>';
-        $row['match_score'] = 50;
-        $recommended_courses[$row['id']] = $row;
-    }
-}
 
 // Fourth approach: Get courses that match the user's programming languages
 if (!empty($language_ids)) {
@@ -199,6 +220,7 @@ if (!empty($language_ids)) {
         FROM courses c
         JOIN course_languages cl ON c.id = cl.course_id
         WHERE cl.language_id IN ($language_id_list)
+        AND c.difficulty_level IN ($level_placeholders)
         GROUP BY c.id
         ORDER BY c.rating DESC
     ";
@@ -206,53 +228,53 @@ if (!empty($language_ids)) {
     $stmt = $conn->prepare($query);
     
     // Build the parameter types string
-    $types = str_repeat("i", count($language_ids));
+    $types = str_repeat("i", count($language_ids)) . str_repeat('s', count($level_filters));
     
     // Create array of parameters with references
-    $params = array($types);
-    
-    // Add references to each language_id
-    foreach ($language_ids as $key => $value) {
-        $language_ids[$key] = &$language_ids[$key];
-        $params[] = &$language_ids[$key];
+    $params = array_merge($language_ids, $level_filters);
+    $tmp = array($types);
+    foreach ($params as &$param) {
+        $tmp[] = &$param;
     }
     
     // Call bind_param with the unpacked array
-    call_user_func_array([$stmt, 'bind_param'], $params);
+    call_user_func_array([$stmt, 'bind_param'], $tmp);
     
     $stmt->execute();
     $result = $stmt->get_result();
     
-    while ($row = $result->fetch_assoc()) {
-        if (!isset($recommended_courses[$row['id']])) {
-            $row['match_reason'] = 'Uses programming languages you know';
-            $row['match_score'] = 70;
-            $recommended_courses[$row['id']] = $row;
-        }
-    }
+    // Rest of the code remains the same...
 }
-
 // If no courses matched the specific criteria, get some general recommendations
 if (empty($recommended_courses)) {
     $query = "
         SELECT * 
         FROM courses
-        WHERE difficulty_level = ?
+        WHERE difficulty_level IN ($level_placeholders)
         ORDER BY rating DESC
         LIMIT 5
     ";
-    
+
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("s", $experience_level);
+
+    $types = str_repeat('s', count($level_filters));
+    $tmp = [];
+    $tmp[] = $types;
+    foreach ($level_filters as &$level) {
+        $tmp[] = &$level;
+    }
+    call_user_func_array([$stmt, 'bind_param'], $tmp);
+
     $stmt->execute();
     $result = $stmt->get_result();
-    
+
     while ($row = $result->fetch_assoc()) {
         $row['match_reason'] = 'Based on your experience level';
         $row['match_score'] = 60;
         $recommended_courses[$row['id']] = $row;
     }
 }
+
 
 // Sort recommended courses by match score
 usort($recommended_courses, function($a, $b) {
@@ -302,6 +324,10 @@ while ($row = $mapping_result->fetch_assoc()) {
     $language_course_mappings[$row['language_id']][] = $row['course_id'];
 }
 
+if (isset($_SESSION['message'])) {
+    echo '<div class="alert alert-success">'.$_SESSION['message'].'</div>';
+    unset($_SESSION['message']);
+    }
 ?>
 
 <!DOCTYPE html>
@@ -459,7 +485,15 @@ while ($row = $mapping_result->fetch_assoc()) {
         
         <div class="recommendations-container">
             <h2 class="mb-4"><i class="fas fa-graduation-cap"></i> Recommended Courses</h2>
-            
+            <?php
+                $student_id = $_SESSION['student_id'];
+                $saved_courses = [];
+                $saved_result = mysqli_query($conn, "SELECT course_id FROM saved_courses WHERE student_id = '$student_id'");
+                while ($row = mysqli_fetch_assoc($saved_result)) {
+                    $saved_courses[] = $row['course_id'];
+                }
+                
+            ?>
             <?php if (!empty($recommended_courses)): ?>
                 <div class="row">
                     <?php foreach ($recommended_courses as $course): ?>
@@ -480,15 +514,28 @@ while ($row = $mapping_result->fetch_assoc()) {
                                                  ($course['difficulty_level'] == 'intermediate' ? 'warning' : 'danger'); 
                                         ?> difficulty-badge"><?php echo ucfirst($course['difficulty_level']); ?></span>
                                     </h5>
-                                    <h6 class="card-subtitle mb-2"><?php echo htmlspecialchars($course['provider']); ?></h6>
-                                    <p class="card-text"><?php echo htmlspecialchars(substr($course['description'], 0, 120)) . '...'; ?></p>
-                                    <p class="small"><strong>Why recommended:</strong> <?php echo $course['match_reason']; ?></p>
-                                    <div class="d-flex justify-content-between">
-                                        <a href="course-details.php?id=<?php echo $course['id']; ?>" class="btn btn-primary">View Details</a>
-                                        <button class="btn btn-outline-secondary save-course" data-course-id="<?php echo $course['id']; ?>">
-                                            <i class="far fa-bookmark"></i> Save
-                                        </button>
-                                    </div>
+                                        <h6 class="card-subtitle mb-2"><?php echo htmlspecialchars($course['provider']); ?></h6>
+                                        <p class="card-text"><?php echo htmlspecialchars(substr($course['description'], 0, 120)) . '...'; ?></p>
+                                        <p class="small"><strong>Why recommended:</strong> <?php echo $course['match_reason']; ?></p>
+                                        <div class="d-flex justify-content-between">
+                                            <a href="course-details.php?id=<?php echo $course['id']; ?>" class="btn btn-primary">View Details</a>
+
+                                            <?php if (in_array($course['id'], $saved_courses)): ?>
+                                                <form method="POST" action="unsave_course.php">
+                                                    <input type="hidden" name="course_id" value="<?php echo $course['id']; ?>">
+                                                    <button class="btn btn-success" type="submit">
+                                                        <i class="fas fa-bookmark"></i> Unsave
+                                                    </button>
+                                                </form>
+                                            <?php else: ?>
+                                                <form method="POST" action="save_course.php">
+                                                    <input type="hidden" name="course_id" value="<?php echo $course['id']; ?>">
+                                                    <button class="btn btn-outline-secondary" type="submit">
+                                                        <i class="far fa-bookmark"></i> Save
+                                                    </button>
+                                                </form>
+                                            <?php endif; ?>
+                                        </div>
                                 </div>
                             </div>
                         </div>

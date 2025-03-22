@@ -46,7 +46,7 @@
 
         .header-container {
             display: flex;
-            justify-content: flex-start;
+            justify-content: space-around;
             align-items: center;
             max-width: 100%;
             margin: 0 auto;
@@ -202,10 +202,15 @@
             cursor: pointer;
         }
         .logout-second{
-            display: none;
+            display: none;     
+        }
+        @media screen and (max-width: 1300px) {
+            .nav-link {
+                margin-left: 1rem;
+            }
         }
 
-        @media screen and (max-width: 768px) {
+        @media screen and (max-width: 800px) {
             .logout-main{
                 display: none;
             }

@@ -27,6 +27,9 @@ $result = $conn->query($sql);
             gap: 20px;
         }
         .instructor-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
             border-radius: 8px;
             padding: 15px;
             text-align: center;
@@ -43,6 +46,7 @@ $result = $conn->query($sql);
             text-decoration: none;
             margin-top: 10px;
             border-radius: 5px;
+            transition: background-color 0.3s   ;
         }
         .delete-btn {
             background-color: #ff4d4d;
@@ -65,25 +69,33 @@ $result = $conn->query($sql);
         <header>
             <h1>Manage Instructors</h1>
             <a href="add_instructor.php" class="add-course-btn">Add New Instructor</a>
+            <?php if (isset($success)): ?>
+                <p class="success"><?php echo $success; ?></p>
+            <?php elseif (isset($error)): ?>
+                <p class="error"><?php echo $error; ?></p>
+            <?php endif; ?>
         </header>
 
         <div class="instructor-grid">
             <?php if ($result->num_rows > 0): ?>
                 <?php while ($row = $result->fetch_assoc()): ?>
                     <div class="instructor-card">
-                        <h3><?php echo htmlspecialchars($row['name']); ?></h3>
-                        <p>Email: <?php echo htmlspecialchars($row['email']); ?></p>
-                        <p>Phone: <?php echo htmlspecialchars($row['phone']); ?></p>
-                        <p>Courses: <?php echo htmlspecialchars($row['courses'] ?: 'None'); ?></p>
-                        
-                        <a href="edit_instructor.php?instructor_id=<?php echo $row['id']; ?>" class="edit-btn">
-                            Edit Instructor
-                        </a>
-                        <a href="delete_instructor.php?instructor_id=<?php echo $row['id']; ?>"
-                            class="delete-btn"
-                            onclick="return confirm('Are you sure you want to delete this instructor?');">
-                            Delete Instructor
-                        </a>
+                        <div class="instructor-details">
+                            <h3><?php echo htmlspecialchars($row['name']); ?></h3>
+                            <p>Email: <?php echo htmlspecialchars($row['email']); ?></p>
+                            <p>Phone: <?php echo htmlspecialchars($row['phone']); ?></p>
+                            <p>Courses: <?php echo htmlspecialchars($row['courses'] ?: 'None'); ?></p>    
+                        </div>
+                        <div class="actions">
+                            <a href="edit_instructor.php?instructor_id=<?php echo $row['id']; ?>" class="edit-btn">
+                                Edit Instructor
+                            </a>
+                            <a href="delete_instructor.php?instructor_id=<?php echo $row['id']; ?>"
+                                class="delete-btn"
+                                onclick="return confirm('Are you sure you want to delete this instructor?');">
+                                Delete Instructor
+                            </a>
+                        </div>
                     </div>
                 <?php endwhile; ?>
             <?php else: ?>

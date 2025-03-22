@@ -1,8 +1,13 @@
 <?php
-include '../LoginPage/conn.php';
+require_once '../LoginPage/conn.php';
 session_start();
 
 $student_id = $_SESSION['student_id'];
+
+if (!isset($_SESSION['student_id'])) {
+  header("Location: ../LoginPage/index.php");
+  exit();
+}
 
 if (!isset($_GET['id'])) {
     echo "Course not found.";
@@ -61,6 +66,19 @@ $instructor_result = $instructor_stmt->get_result();
       max-width: 900px;
       margin: auto;
     }
+    .set-appointment-btn {
+        display: inline-block;
+        padding: 8px 15px;
+        background: #817ec7;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        margin-top: 20px;
+        transition: background 0.3s;
+    }
+    .set-appointment-btn:hover{
+      background:rgb(109, 107, 170);
+    }
     .course-img {
       width: 100%;
       height: auto;
@@ -72,6 +90,9 @@ $instructor_result = $instructor_stmt->get_result();
       margin-top: 30px;
     }
     .instructor-card {
+      display: flex;
+      justify-content: space-between;
+      align-content: center;
       border: 1px solid #dee2e6;
       border-radius: 10px;
       padding: 15px;
@@ -132,9 +153,14 @@ $instructor_result = $instructor_stmt->get_result();
     <?php if ($instructor_result->num_rows > 0): ?>
       <?php while ($instructor = $instructor_result->fetch_assoc()): ?>
         <div class="instructor-card">
+          <div class="instructor-details">
           <h6><?php echo htmlspecialchars($instructor['name']); ?></h6>
           <p>Email: <?php echo htmlspecialchars($instructor['email']); ?><br>
              Phone: <?php echo htmlspecialchars($instructor['phone']); ?></p>
+          </div>
+             <div class="instructor-meet">
+              <a href="set_appointment.php" class="set-appointment-btn">Set up a new appointment</a>
+            </div>
         </div>
       <?php endwhile; ?>
     <?php else: ?>

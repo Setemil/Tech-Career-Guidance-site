@@ -1,16 +1,15 @@
 <?php
 session_start();
-require_once '../LoginPage/conn.php'; // Database connection
+require_once '../LoginPage/conn.php';
 
-// Retrieve student ID from session
-$stmt = $conn->prepare("SELECT student_id FROM student WHERE name = ?");
-$stmt->bind_param("s", $_SESSION['name']);
-$stmt->execute();
-$stmt->bind_result($student_id);
-$stmt->fetch();
-$stmt->close();
+if (!isset($_SESSION['student_id'])) {
+    $_SESSION['error_message'] = "User session invalid. Please log in again.";
+    header("Location: ../LoginPage/index.php");
+    exit();
+}
 
-if (!$student_id) {
+$student_id = $_SESSION['student_id'];
+if (!$username) {
     $_SESSION['error_message'] = "User session invalid. Please log in again.";
     header("Location: ../LoginPage/index.php");
     exit();
