@@ -109,6 +109,14 @@ $conn->close();
             margin-top: 20px;
             text-align: center;
         }
+        .details{
+            background-color: skyblue; 
+            margin-bottom: 10px; 
+            transition: background-color 0.3s;
+        }
+        .details:hover{
+            background-color:rgb(0, 195, 255);
+        }
         @media screen and (max-width: 768px) {
             .cards {
                 grid-template-columns: 1fr;
@@ -133,6 +141,7 @@ $conn->close();
                         <img src="../<?= htmlspecialchars($course['course_image']) ?>" alt="<?= htmlspecialchars($course['course_name']) ?>">
                         <div class="card-content">
                             <h3><?= htmlspecialchars($course['course_name']) ?></h3>
+                            <a href="course-details.php?id=<?php echo $course['id']; ?>" class="cta-button details">View Details</a>
                             <a href="roadmap.php?course_id=<?= $course['id'] ?>" class="cta-button">Explore Path</a>
                         </div>
                     </div>
@@ -142,6 +151,7 @@ $conn->close();
             <?php endif; ?>
         </div>
 
+        <section id="others">
         <h3>Explore Other Courses</h3>
         <div class="cards">
             <?php if (!empty($otherCourses)): ?>
@@ -150,6 +160,7 @@ $conn->close();
                         <img src="../<?= htmlspecialchars($course['course_image']) ?>" alt="<?= htmlspecialchars($course['course_name']) ?>">
                         <div class="card-content">
                             <h3><?= htmlspecialchars($course['course_name']) ?></h3>
+                            <a href="course-details.php?id=<?php echo $course['id']; ?>" class="cta-button details">View Details</a>
                             <a href="roadmap.php?course_id=<?= $course['id'] ?>" class="cta-button">Explore Path</a>
                         </div>
                     </div>
@@ -158,6 +169,7 @@ $conn->close();
                 <p style="margin-left: 20px;">No other courses available.</p>
             <?php endif; ?>
         </div>
+        </section>
     </div>
 
 

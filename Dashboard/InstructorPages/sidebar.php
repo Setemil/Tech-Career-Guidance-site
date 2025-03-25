@@ -1,3 +1,41 @@
+<style>
+    .main-content {
+    width: 100%;
+    margin-left: 300px;
+    padding: 20px;
+}
+header {
+    background: white;
+    padding: 15px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background-color: #817ec7; /* Your primary color */
+  color: white;
+}
+
+td {
+  background-color: #f9f9f9;
+}
+
+tr:hover {
+  background-color: #f1f1f1;
+}
+
+</style>
 <div class="sidebar">
         <h2>Instructors Panel</h2>
         <ul>

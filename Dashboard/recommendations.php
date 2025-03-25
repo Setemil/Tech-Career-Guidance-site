@@ -430,7 +430,6 @@ if (isset($_SESSION['message'])) {
     </style>
 </head>
 <body>
-    <!-- <?php include 'menu-bar.php'; ?> -->
     <div class="main-content">
     <div class="container mt-5 mb-5">
         <div class="header-actions">
@@ -554,6 +553,7 @@ if (isset($_SESSION['message'])) {
                     </div>
                 </div>
             <?php endif; ?>
+            <a href="paths.php#others" class="btn btn-outline-secondary">View other courses</a>
             </div>
         
         <div class="mt-5 pt-3 border-top">
