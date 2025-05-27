@@ -19,7 +19,8 @@ A web-based platform designed to help individuals explore, plan, and grow their 
 ## 📦 Installation
  To clone the repository:
    ```bash
-   git clone https://github.com/setemil/tech-career-guidance.git
+   git clone https://github.com/setemil/tech-career-guidance-site.git
    cd tech-career-guidance
+ ```
  Using a local server (eg XAMPP) import the database file included
 
